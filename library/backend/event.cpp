@@ -64,9 +64,9 @@ static void write( QString& buf, const Event::RepeatPattern &r )
     buf += " rhasenddate=\"" + QString::number( static_cast<int>( r.hasEndDate ) ) + "\"";
      if ( r.hasEndDate )
         buf += " enddt=\""
-               + QString::number( r.endDateUTC ? r.endDateUTC : time( 0 ) )
+               + QString::number( (double) ( r.endDateUTC ? r.endDateUTC : time( 0 ) ), 'f', 0 )
                + "\"";
-    buf += " created=\"" + QString::number( r.createTime ) + "\"";
+    buf += " created=\"" + QString::number( (double) r.createTime, 'f', 0 ) + "\"";
 }
 
 Qtopia::UidGen Event::sUidGen( Qtopia::UidGen::Qtopia );
@@ -449,8 +449,8 @@ QMap<int, QString> Event::toMap() const
     if ( !notes().isEmpty() )
         m.insert ( Note, notes() );
 
-    m.insert ( StartDateTime, QString::number( TimeConversion::toUTC( start() ) ) );
-    m.insert ( EndDateTime, QString::number( TimeConversion::toUTC( end() ) ) );
+    m.insert ( StartDateTime, QString::number( (double) TimeConversion::toUTC( start() ), 'f', 0 ) );
+    m.insert ( EndDateTime, QString::number( (double) TimeConversion::toUTC( end() ), 'f', 0 ) );
     m.insert ( DatebookType, QString::number( (int)type() ) );
     m.insert ( HasAlarm, ( hasAlarm() ? "1" : "0" ) );
     m.insert ( SoundType, QString::number( (int)alarmSound() ) );
@@ -460,7 +460,7 @@ QMap<int, QString> Event::toMap() const
     m.insert ( RepeatPatternPosition, QString::number( repeatPattern().position ) );
     m.insert ( RepeatPatternDays, QString::number( repeatPattern().days ) );
     m.insert ( RepeatPatternHasEndDate, QString::number( static_cast<int>( repeatPattern().hasEndDate ) ) );
-    m.insert ( RepeatPatternEndDate, QString::number( repeatPattern().endDateUTC ) );
+    m.insert ( RepeatPatternEndDate, QString::number( (double) repeatPattern().endDateUTC, 'f', 0 ) );
 
     m.insert ( Exceptions, exceptionsStr() );
 
@@ -752,11 +752,11 @@ void Event::save( QString& buf )
         write( buf, pattern );
 
     buf += " start=\""
-           + QString::number( startUTC )
+           + QString::number( (double) startUTC, 'f', 0 )
            + "\"";
 
     buf += " end=\""
-           + QString::number( endUTC )
+           + QString::number( (double) endUTC, 'f', 0 )
            + "\"";
 
     if ( !note.isEmpty() )

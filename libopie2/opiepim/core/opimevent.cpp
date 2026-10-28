@@ -596,8 +596,8 @@ QMap<int, QString> OPimEvent::toMap() const
     }
 
     OPimTimeZone zone( OPimTimeZone::current() );
-    retMap.insert( OPimEvent::FStart, QString::number( zone.fromDateTime( startDateTime())));
-    retMap.insert( OPimEvent::FEnd, QString::number( zone.fromDateTime(   endDateTime() )));
+    retMap.insert( OPimEvent::FStart, QString::number( (double) zone.fromDateTime( startDateTime()), 'f', 0 ));
+    retMap.insert( OPimEvent::FEnd, QString::number( (double) zone.fromDateTime(   endDateTime() ), 'f', 0 ));
     retMap.insert( OPimEvent::FNote, Qtopia::escapeString( note() ) );
     if( !isAllDay() )
         retMap.insert( OPimEvent::FTimeZone, timeZone().isEmpty() ? QString( "None" ) : timeZone() );

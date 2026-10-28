@@ -110,7 +110,8 @@ static void saveState()
 
 		QListIterator<timerEventItem> it( timerEventList );
 		for ( ; *it; ++it ) {
-			ds << it.current()->UTCtime;
+			// Qt 2's alarm-state stream format stores time_t as 32-bit.
+			ds << (Q_INT32) it.current()->UTCtime;
 			ds << it.current()->channel;
 			ds << it.current()->message;
 			ds << it.current()->data;
@@ -139,7 +140,9 @@ void AlarmServer::initialize()
 		QDataStream ds( &savefile );
 		while ( !ds.atEnd() ) {
 			timerEventItem *newTimerEventItem = new timerEventItem;
-			ds >> newTimerEventItem->UTCtime;
+			Q_INT32 utcTime;
+			ds >> utcTime;
+			newTimerEventItem->UTCtime = (time_t) utcTime;
 			ds >> newTimerEventItem->channel;
 			ds >> newTimerEventItem->message;
 			ds >> newTimerEventItem->data;

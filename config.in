@@ -92,7 +92,7 @@ config QUICKLAUNCH_PATH
 
 config SPECFILE
   string
-  default "qws/linux-generic-g++" if TARGET_X86 && (! X11)
+  default "qws/linux-arm-g++" if TARGET_X86 && (! X11)
   default "linux-g++" if TARGET_X86 && X11
   default "qws/linux-sharp-g++" if TARGET_SHARP && (! X11)
   default "linux-g++" if TARGET_SHARP && X11
@@ -288,4 +288,3 @@ comment ""
 menu "Unsupported / Unmaintained"
   source noncore/unsupported/config.in
 endmenu
-

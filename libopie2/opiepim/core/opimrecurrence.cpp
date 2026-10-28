@@ -659,9 +659,9 @@ QMap<int, QString> OPimRecurrence::toMap() const
     retMap.insert( OPimRecurrence::RFreq, QString::number( data->freq ) );
     retMap.insert( OPimRecurrence::RHasEndDate, QString::number( static_cast<int>( data->hasEnd ) ) );
     if( data->hasEnd )
-        retMap.insert( OPimRecurrence::EndDate, QString::number( OPimTimeZone::current().fromDateTime( QDateTime( data->end, QTime(12,0,0) ) ) ) );
+        retMap.insert( OPimRecurrence::EndDate, QString::number( (double) OPimTimeZone::current().fromDateTime( QDateTime( data->end, QTime(12,0,0) ) ), 'f', 0 ) );
 
-    retMap.insert( OPimRecurrence::Created, QString::number( OPimTimeZone::current().fromDateTime( data->create ) ) );
+    retMap.insert( OPimRecurrence::Created, QString::number( (double) OPimTimeZone::current().fromDateTime( data->create ), 'f', 0 ) );
 
     if ( ! data->list.isEmpty() ) {
         // save exceptions list

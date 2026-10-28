@@ -359,7 +359,7 @@ define descend
 endef
 
 define makefilegen
-	cd $(if $(1),$(dir $(1))); $(TOPDIR)/qmake/qmake $(3) -o $(if $(1),$(notdir $(1))) $(word 3,$(shell grep "[[:space:]]$(patsubst %/Makefile,%,$(1))[[:space:]]" $(OPIEDIR)/packages))
+	cd $(if $(1),$(dir $(1))); $(TOPDIR)/qmake/qmake -spec $(QMAKESPEC) $(3) -o $(if $(1),$(notdir $(1))) $(word 3,$(shell grep "[[:space:]]$(patsubst %/Makefile,%,$(1))[[:space:]]" $(OPIEDIR)/packages))
 endef
 
 define makecfg
